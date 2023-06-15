@@ -10,4 +10,7 @@ router.get("/comentarios", apiMexcom.getComentarios); // Nueva ruta para getOfer
 router.post("/ver-usuario", apiMexcom.verUsuario); // Nueva ruta para verUsuario
 router.post("/crear-ofertante", apiMexcom.crearOfertante); // Nueva ruta para crearOfertante
 router.post("/crear-pdo", apiMexcom.crearPuntoOferta); // Nueva ruta para crearPuntoDeOferta
+router.delete("/del-pts", apiMexcom.delProductos); // Ruta para eliminar productos
+router.delete("/del-pdo", apiMexcom.delPDO); // Ruta para eliminar puntos de ofertas
+router.delete("/del-ofers", apiMexcom.delOfertadores); // Ruta para eliminar puntos de ofertas
 export default router;

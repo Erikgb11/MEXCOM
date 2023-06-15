@@ -216,7 +216,48 @@ const getComentarios = async (req, res) => {
       }
     }
   };
-  
+  //Eliminar productos
+  const delProductos = async (req, res) => {
+    try {
+      const { idProducto } = req.body;
+      const connection = await getConnection();
+      await connection.query("DELETE FROM productos WHERE idProducto = ?", [
+        idProducto
+      ]);
+      res.json({ message: "Producto eliminado exitosamente" });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+
+  //Eliminar puntos de oferta
+  const delPDO = async (req, res) => {
+    try {
+      const { idPuntoDeOferta } = req.body;
+      const connection = await getConnection();
+      await connection.query("DELETE FROM puntosdeoferta WHERE idPuntoDeOferta = ?", [
+        idPuntoDeOferta
+      ]);
+      res.json({ message: "Punto de oferta eliminado exitosamente" });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+
+  //Eliminar ofertadores
+  const delOfertadores = async (req, res) => {
+    try {
+      const { idOfertador } = req.body;
+      const connection = await getConnection();
+      await connection.query("DELETE FROM ofertadores WHERE idOfertador = ?", [
+        idOfertador
+      ]);
+      res.json({ message: "Ofertador eliminado exitosamente" });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+
 export const methods = {
     getPuntosOferta,
     addProduct,
@@ -224,5 +265,8 @@ export const methods = {
     getComentarios,
     verUsuario,
     crearOfertante,
-    crearPuntoOferta
+    crearPuntoOferta,
+    delProductos,
+    delPDO,
+    delOfertadores
 };
