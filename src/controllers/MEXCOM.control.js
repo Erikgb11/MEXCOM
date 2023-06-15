@@ -65,8 +65,164 @@ const addProduct = async (req, res) => {
         res.send(error.message)
     }
 };
+//mostrar ofertadores
+const getOfertadores = async (req, res) => {
+    try {
+      const connection = await getConnection();
+      const result = await connection.query("SELECT * FROM ofertadores");
+      res.json(result);
+    } catch (error) {
+      res.status(500);
+      res.send(error.message);
+    }
+};
+//mostrar comentarios
+const getComentarios = async (req, res) => {
+    try {
+      const connection = await getConnection();
+      const result = await connection.query("SELECT * FROM comentarios");
+      res.json(result);
+    } catch (error) {
+      res.status(500);
+      res.send(error.message);
+    }
+  };
 
+  //verificacion de usuario (login)
+  const verUsuario = async (req, res) => {
+    try {
+      const { email, contraseña } = req.body;
+      const connection = await getConnection();
+      const result = await connection.query(
+        //"SELECT * FROM ofertadores WHERE correoElectronico = ? AND contraseña = ?",
+        //con el campo contraseña tengo errores al hacer la consulta, por lo que para probar que funcionaba use usuario
+        "SELECT * FROM ofertadores WHERE correoElectronico = ? AND usuario = ?",
+        [email, contraseña]
+      );
+      if (result.length > 0) {
+        res.json({ message: "Usuario válido" });
+      } else {
+        res.status(401).json({ error: "Credenciales inválidas" });
+      }
+    } catch (error) {
+      res.status(500);
+      res.send(error.message);
+    }
+  };
+
+  //Creacion de usuario (ofertante)
+  const crearOfertante = async (req, res) => {
+    let connection;
+    try {
+      const {
+        idFoto,
+        tipoOfertador,
+        nombreOfertante,
+        fechaNacimiento,
+        usuario,
+        contraseña,
+        correoElectronico,
+        informacionContacto,
+      } = req.body;
+  
+      connection = await getConnection();
+      await connection.beginTransaction();
+  
+      const insertOfertanteQuery = `
+        INSERT INTO ofertadores (
+          idFoto,
+          tipoOfertador,
+          nombreOfertante,
+          fechaNacimiento,
+          usuario,
+          contraseña,
+          correoElectronico,
+          informacionContacto
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+  
+      await connection.query(insertOfertanteQuery, [
+        idFoto,
+        tipoOfertador,
+        nombreOfertante,
+        fechaNacimiento,
+        usuario,
+        contraseña,
+        correoElectronico,
+        informacionContacto,
+      ]);
+  
+      await connection.commit();
+  
+      res.json({ message: "Ofertante creado exitosamente" });
+    } catch (error) {
+      if (connection) {
+        await connection.rollback();
+      }
+      res.status(500).json({ error: error.message });
+    } finally {
+      if (connection) {
+        connection.release();
+      }
+    }
+  };
+
+  //Creacion de usuario (ofertante)
+  const crearPuntoOferta = async (req, res) => {
+    let connection;
+    try {
+      const {
+        idRegion,
+        idOfertador,
+        idFoto,
+        nombrePuntoDeOferta,
+        descripcion
+      } = req.body;
+  
+      connection = await getConnection();
+      await connection.beginTransaction();
+  
+      const insertOfertanteQuery = `
+        INSERT INTO puntosdeoferta (
+            idRegion,
+            idOfertador,
+            idFoto,
+            nombrePuntoDeOferta,
+            descripcion
+        )
+        VALUES (?, ?, ?, ?, ?)
+      `;
+  
+      await connection.query(insertOfertanteQuery, [
+        idRegion,
+        idOfertador,
+        idFoto,
+        nombrePuntoDeOferta,
+        descripcion,
+      ]);
+  
+      await connection.commit();
+  
+      res.json({ message: "Punto de Oferta registrado exitosamente" });
+    } catch (error) {
+      if (connection) {
+        await connection.rollback();
+      }
+      res.status(500).json({ error: error.message });
+    } finally {
+      if (connection) {
+        connection.release();
+      }
+    }
+  };
+  
 export const methods = {
     getPuntosOferta,
-    addProduct
+    addProduct,
+    getOfertadores,
+    getComentarios,
+    verUsuario,
+    crearOfertante,
+    crearPuntoOferta
 };
