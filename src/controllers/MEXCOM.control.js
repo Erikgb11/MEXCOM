@@ -40,7 +40,7 @@ const getPuntosOferta= async(req, res) => {
     try {
         //Con await lo que haces es decir que espere hasta que se realizen estos procesos 
         const connection = await getConnection();
-        const resutl = await connection.query("SELECT * FROM puntosdeoferta")
+        const resutl = await connection.query("SELECT nombrePuntoDeOferta, descripcion FROM puntosdeoferta")
         res.json(resutl);   
     } catch (error) {
         res.status(500);
@@ -93,7 +93,7 @@ const addProduct = async (req, res) => {
 const getOfertadores = async (req, res) => {
     try {
       const connection = await getConnection();
-      const result = await connection.query("SELECT * FROM ofertadores");
+      const result = await connection.query("SELECT tipoOfertador,nombreOfertante,fechaNacimiento,usuario,correoElectronico,informacionContacto FROM ofertadores");
       res.json(result);
     } catch (error) {
       res.status(500);
@@ -104,7 +104,7 @@ const getOfertadores = async (req, res) => {
 const getComentarios = async (req, res) => {
     try {
       const connection = await getConnection();
-      const result = await connection.query("SELECT * FROM comentarios");
+      const result = await connection.query("SELECT comentario,puntuacionPositiva,puntuacionNegativa FROM comentarios");
       res.json(result);
     } catch (error) {
       res.status(500);
@@ -467,6 +467,120 @@ const updateServs = async (req, res) => {
   }
 };
 
+//Mostrar Productos con respecto al punto de oferta
+const showProducts = async (req, res) => {
+  try {
+    const { idPuntoDeOferta } = req.body;
+    const connection = await getConnection();
+    const result = await connection.query(
+      "SELECT nombreProducto,descripcion,precio FROM productos WHERE idPuntoDeOferta = ?",
+      [idPuntoDeOferta]
+    );
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+//Mostrar Servicioss con respecto al punto de oferta
+const showServs = async (req, res) => {
+  try {
+    const { idPuntoDeOferta } = req.body;
+    const connection = await getConnection();
+    const result = await connection.query(
+      "SELECT nombreServicio,descripcion,precioAproximadoMin,precioAproximadoMax FROM servicios WHERE idPuntoDeOferta = ?",
+      [idPuntoDeOferta]
+    );
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+//obtener GeoJSON
+const getGeojson = async (req, res) => {
+  try {
+    const { idColonia } = req.body;
+    const connection = await getConnection();
+    const result = await connection.query(
+      "SELECT geoJSON FROM regiones WHERE idColonia = ?",
+      [idColonia]
+    );
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+//obtener informacion grupo comercial
+const infoGrupCom = async (req, res) => {
+  try {
+    const { idRegion } = req.body;
+    const connection = await getConnection();
+    const result = await connection.query(
+      "SELECT COUNT(p.idRegion) AS Total, r.nombreRegion FROM puntosdeoferta p JOIN regiones r ON p.idRegion = r.idRegion WHERE p.idRegion = ? GROUP BY r.nombreRegion;",
+      [idRegion]
+    );
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+//insertar comentario
+const newComent = async (req, res) => {
+  let connection;
+  try {
+    const {
+      idReview,
+      idFoto,
+      comentario,
+      puntuacionPositiva,
+      puntuacionNegativa
+    } = req.body;
+
+    connection = await getConnection();
+    await connection.beginTransaction();
+
+    // Verificar si el idReview existe en la tabla review
+    const reviewExistsQuery = "SELECT idReview FROM review WHERE idReview = ?";
+    const reviewExists = await connection.query(reviewExistsQuery, [idReview]);
+
+    if (reviewExists.length === 0) {
+      // El idReview no existe, retornar un error
+      throw new Error("El idReview especificado no existe");
+    }
+
+    const insertComentarioQuery = `
+      INSERT INTO comentarios (
+        idReview,
+        idFoto,
+        comentario,
+        puntuacionPositiva,
+        puntuacionNegativa
+      )
+      VALUES (?, ?, ?, ?, ?)
+    `;
+
+    await connection.query(insertComentarioQuery, [
+      idReview,
+      idFoto,
+      comentario,
+      puntuacionPositiva,
+      puntuacionNegativa
+    ]);
+
+    await connection.commit();
+
+    res.json({ message: "Comentario registrado exitosamente" });
+  } catch (error) {
+    if (connection) {
+      await connection.rollback();
+    }
+    res.status(500).json({ error: error.message });
+  }
+};
+
 export const methods = {
     getPuntosOferta,
     addProduct,
@@ -481,7 +595,12 @@ export const methods = {
     insServicio,
     updateOfertador,
     updateProducts,
-    updateServs
+    updateServs,
+    showProducts,
+    showServs,
+    getGeojson,
+    infoGrupCom,
+    newComent
 };
 
 /*Anotaciones:
@@ -490,5 +609,6 @@ como para administradores
 -se cambio el parametro descripción por descripcion para servicios y productos
 -se cambiaron en servicios los parametros precioAproximado(Maximo) y precioAproximado(Minimo)
 por precioAproximadoMax y precioAproximadoMin ya que al usar () daba errores
-
+-se cambio la tabla regiónes por el tema del acento, ahora se llama regiones, tambien se
+cambio una columna que contenia acento
 */

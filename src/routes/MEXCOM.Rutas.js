@@ -3,7 +3,7 @@ import { methods as apiMexcom} from "../controllers/MEXCOM.control";
 const router = Router();
 
 //Con router manejamos las rutas y las peticiones HTML
-router.get("/", apiMexcom.getPuntosOferta);
+router.get("/puntosdeoferta", apiMexcom.getPuntosOferta);
 router.post("/addproducto", apiMexcom.addProduct);//Nueva ruta para añadir productos
 router.get("/ofertadores", apiMexcom.getOfertadores); // Nueva ruta para getOfertadores
 router.get("/comentarios", apiMexcom.getComentarios); // Nueva ruta para getOfertadores
@@ -17,4 +17,9 @@ router.post("/ins-serv", apiMexcom.insServicio); // Nueva ruta para crear servic
 router.put("/upd-ofer", apiMexcom.updateOfertador);//Actualizar ofertador
 router.put("/upd-prod", apiMexcom.updateProducts);//Actualizar producto
 router.put("/upd-serv", apiMexcom.updateServs);//Actualizar servicio
+router.post("/showProducts", apiMexcom.showProducts);//Mostrar productos respecto a los puntos de oferta
+router.post("/showServs", apiMexcom.showServs);//Mostrar servicios respecto a los puntos de oferta
+router.post("/geojson", apiMexcom.getGeojson);//Mostrar geojson con respecto a su colonia
+router.post("/grupCom", apiMexcom.infoGrupCom);//Mostrar geojson con respecto a su colonia
+router.post("/newcoment", apiMexcom.newComent); // Nueva ruta para nuevo comentario
 export default router;

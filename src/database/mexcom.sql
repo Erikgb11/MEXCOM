@@ -150,12 +150,12 @@ INSERT INTO `MEXCOM`.`Colonias_Barrios` (`idLocalidad`, `nombreColonia`, `cantid
 VALUES(1, "Zacatenco", 0);
 
 -- -----------------------------------------------------
--- Table `MEXCOM`.`Regiónes`
+-- Table `MEXCOM`.`Regiones`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `MEXCOM`.`Regiónes` (
+CREATE TABLE IF NOT EXISTS `MEXCOM`.`Regiones` (
   `idRegion` INT NOT NULL AUTO_INCREMENT,
   `idColonia` INT NOT NULL,
-  `nombreRegión` VARCHAR(45) NOT NULL,
+  `nombreRegion` VARCHAR(45) NOT NULL,
   `cantidadOfertantes` INT NOT NULL,
   `geoJSON` GEOMETRY,
   PRIMARY KEY (`idRegion`, `idColonia`),
@@ -166,11 +166,11 @@ CREATE TABLE IF NOT EXISTS `MEXCOM`.`Regiónes` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE UNIQUE INDEX `idRegiones_UNIQUE` ON `MEXCOM`.`Regiónes` (`idRegion` ASC) VISIBLE;
-CREATE INDEX `idColonia_idx` ON `MEXCOM`.`Regiónes` (`idColonia` ASC) VISIBLE;
+CREATE UNIQUE INDEX `idRegiones_UNIQUE` ON `MEXCOM`.`Regiones` (`idRegion` ASC) VISIBLE;
+CREATE INDEX `idColonia_idx` ON `MEXCOM`.`Regiones` (`idColonia` ASC) VISIBLE;
 
 -- ``
-INSERT INTO `MEXCOM`.`Regiónes` (`idColonia`, `nombreRegión`, `cantidadOfertantes`)
+INSERT INTO `MEXCOM`.`Regiones` (`idColonia`, `nombreRegion`, `cantidadOfertantes`)
 VALUES(1, "ESCOM", 5);
 
 
@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `MEXCOM`.`puntosDeOferta` (
   PRIMARY KEY (`idPuntoDeOferta`, `idRegion`, `idOfertador`, `idFoto`),
   CONSTRAINT `FK_puntosDeOferta_Regiones`
     FOREIGN KEY (`idRegion`)
-    REFERENCES `MEXCOM`.`Regiónes` (`idRegion`)
+    REFERENCES `MEXCOM`.`Regiones` (`idRegion`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_puntosDeOferta_Ofertadores`
