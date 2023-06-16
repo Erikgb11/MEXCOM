@@ -50,20 +50,44 @@ const getPuntosOferta= async(req, res) => {
 
 //Metodo para insertar un producto
 const addProduct = async (req, res) => {
-    try {        
-        const { nombre, edad } = req.body;        
-        
-        console.log(nombre);
-        console.log(edad);
+  let connection;
+  try {
+    const {
+      idPuntoDeOferta,
+      nombreProducto,
+      descripcion,
+      precio
+    } = req.body;
 
-        const connection = await getConnection();
-        res.json("Parametro recibido");
-        
-        
-    } catch (error) {
-        res.status(500);
-        res.send(error.message)
+    connection = await getConnection();
+    await connection.beginTransaction();
+
+    const insertOfertanteQuery = `
+    INSERT INTO productos (
+        idPuntoDeOferta,
+        nombreProducto,
+        descripcion,
+        precio
+      )
+      VALUES (?, ?, ?, ?)
+    `;
+
+    await connection.query(insertOfertanteQuery, [
+      idPuntoDeOferta,
+      nombreProducto,
+      descripcion,
+      precio
+    ]);
+
+    await connection.commit();
+
+    res.json({ message: "Producto registrado exitosamente" });
+  } catch (error) {
+    if (connection) {
+      await connection.rollback();
     }
+    res.status(500).json({ error: error.message });
+  } 
 };
 //mostrar ofertadores
 const getOfertadores = async (req, res) => {
@@ -94,9 +118,9 @@ const getComentarios = async (req, res) => {
       const { email, contraseña } = req.body;
       const connection = await getConnection();
       const result = await connection.query(
-        //"SELECT * FROM ofertadores WHERE correoElectronico = ? AND contraseña = ?",
+        "SELECT * FROM ofertadores WHERE correoElectronico = ? AND contrasena = ?",
         //con el campo contraseña tengo errores al hacer la consulta, por lo que para probar que funcionaba use usuario
-        "SELECT * FROM ofertadores WHERE correoElectronico = ? AND usuario = ?",
+        //"SELECT * FROM ofertadores WHERE correoElectronico = ? AND usuario = ?",
         [email, contraseña]
       );
       if (result.length > 0) {
@@ -135,7 +159,7 @@ const getComentarios = async (req, res) => {
           nombreOfertante,
           fechaNacimiento,
           usuario,
-          contraseña,
+          contrasena,
           correoElectronico,
           informacionContacto
         )
@@ -161,11 +185,7 @@ const getComentarios = async (req, res) => {
         await connection.rollback();
       }
       res.status(500).json({ error: error.message });
-    } finally {
-      if (connection) {
-        connection.release();
-      }
-    }
+    } 
   };
 
   //Creacion de usuario (ofertante)
@@ -210,10 +230,6 @@ const getComentarios = async (req, res) => {
         await connection.rollback();
       }
       res.status(500).json({ error: error.message });
-    } finally {
-      if (connection) {
-        connection.release();
-      }
     }
   };
   //Eliminar productos
@@ -239,6 +255,7 @@ const getComentarios = async (req, res) => {
         idPuntoDeOferta
       ]);
       res.json({ message: "Punto de oferta eliminado exitosamente" });
+      console.log(idPuntoDeOferta)
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -247,16 +264,208 @@ const getComentarios = async (req, res) => {
   //Eliminar ofertadores
   const delOfertadores = async (req, res) => {
     try {
-      const { idOfertador } = req.body;
+      const { idOfertador } = await req.body;
       const connection = await getConnection();
       await connection.query("DELETE FROM ofertadores WHERE idOfertador = ?", [
         idOfertador
       ]);
       res.json({ message: "Ofertador eliminado exitosamente" });
+      console.log(idOfertador)
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   };
+
+//insertar servicio
+const insServicio = async (req, res) => {
+  let connection;
+  try {
+    const {
+      idPuntoDeOferta,
+      nombreServicio,
+      descripcion,
+      precioAproximadoMin,
+      precioAproximadoMax
+    } = req.body;
+
+    connection = await getConnection();
+    await connection.beginTransaction();
+
+    const insertOfertanteQuery = `
+      INSERT INTO servicios (
+        idPuntoDeOferta,
+        nombreServicio,
+        descripcion,
+        precioAproximadoMin,
+        precioAproximadoMax
+      )
+      VALUES (?, ?, ?, ?, ?)
+    `;
+
+    await connection.query(insertOfertanteQuery, [
+      idPuntoDeOferta,
+      nombreServicio,
+      descripcion,
+      precioAproximadoMin,
+      precioAproximadoMax
+    ]);
+
+    await connection.commit();
+
+    res.json({ message: "Servicio registrado exitosamente" });
+  } catch (error) {
+    if (connection) {
+      await connection.rollback();
+    }
+    res.status(500).json({ error: error.message });
+  }
+};
+
+//Modificacion de ofertador
+const updateOfertador = async (req, res) => {
+  let connection;
+  try {
+    const {
+      idOfertador,
+      idFoto,
+      tipoOfertador,
+      nombreOfertante,
+      fechaNacimiento,
+      usuario,
+      contraseña,
+      correoElectronico,
+      informacionContacto,
+    } = req.body;
+
+    connection = await getConnection();
+    await connection.beginTransaction();
+
+    const updateOfertadorQuery = `
+      UPDATE ofertadores SET
+        idFoto = ?,
+        tipoOfertador = ?,
+        nombreOfertante = ?,
+        fechaNacimiento = ?,
+        usuario = ?,
+        contrasena = ?,
+        correoElectronico = ?,
+        informacionContacto = ?
+      WHERE
+        idOfertador = ?
+    `;
+
+    await connection.query(updateOfertadorQuery, [
+      idFoto,
+      tipoOfertador,
+      nombreOfertante,
+      fechaNacimiento,
+      usuario,
+      contraseña,
+      correoElectronico,
+      informacionContacto,
+      idOfertador,
+    ]);
+
+    await connection.commit();
+
+    res.json({ message: "Ofertador actualizado exitosamente" });
+  } catch (error) {
+    if (connection) {
+      await connection.rollback();
+    }
+    res.status(500).json({ error: error.message });
+  }
+};
+
+//Modificacion de productos
+const updateProducts = async (req, res) => {
+  let connection;
+  try {
+    const {
+      idProducto,
+      idPuntoDeOferta,
+      nombreProducto,
+      descripcion,
+      precio
+    } = req.body;
+
+    connection = await getConnection();
+    await connection.beginTransaction();
+
+    const updateOfertadorQuery = `
+      UPDATE productos SET
+        idPuntoDeOferta = ?,
+        nombreProducto = ?,
+        descripcion = ?,
+        precio = ?
+      WHERE
+        idProducto = ?
+    `;
+
+    await connection.query(updateOfertadorQuery, [
+      idPuntoDeOferta,
+      nombreProducto,
+      descripcion,
+      precio,
+      idProducto
+    ]);
+
+    await connection.commit();
+
+    res.json({ message: "Producto actualizado exitosamente" });
+  } catch (error) {
+    if (connection) {
+      await connection.rollback();
+    }
+    res.status(500).json({ error: error.message });
+  }
+};
+//Modificacion de servicios
+const updateServs = async (req, res) => {
+  let connection;
+  try {
+    const {
+      idServicio,
+      idPuntoDeOferta,
+      nombreServicio,
+      descripcion,
+      precioAproximadoMax,
+      precioAproximadoMin
+    } = req.body;
+
+    connection = await getConnection();
+    await connection.beginTransaction();
+
+    const updateOfertadorQuery = `
+      UPDATE servicios SET
+        idPuntoDeOferta = ?,
+        nombreServicio = ?,
+        descripcion = ?,
+        precioAproximadoMax = ?,
+        precioAproximadoMin = ?
+      WHERE
+        idServicio = ?
+    `;
+
+    await connection.query(updateOfertadorQuery, [
+      idPuntoDeOferta,
+      nombreServicio,
+      descripcion,
+      precioAproximadoMax,
+      precioAproximadoMin,
+      idServicio
+    ]);
+
+    await connection.commit();
+
+    res.json({ message: "Servicio actualizado exitosamente" });
+  } catch (error) {
+    if (connection) {
+      await connection.rollback();
+    }
+    res.status(500).json({ error: error.message });
+  }
+};
 
 export const methods = {
     getPuntosOferta,
@@ -268,5 +477,18 @@ export const methods = {
     crearPuntoOferta,
     delProductos,
     delPDO,
-    delOfertadores
+    delOfertadores,
+    insServicio,
+    updateOfertador,
+    updateProducts,
+    updateServs
 };
+
+/*Anotaciones:
+-se cambio el parametro contraseña por contrasena en la base de datos tanto para ofertantes 
+como para administradores
+-se cambio el parametro descripción por descripcion para servicios y productos
+-se cambiaron en servicios los parametros precioAproximado(Maximo) y precioAproximado(Minimo)
+por precioAproximadoMax y precioAproximadoMin ya que al usar () daba errores
+
+*/

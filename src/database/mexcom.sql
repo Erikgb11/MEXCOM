@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `MEXCOM`.`Administrador` (
   `idFoto` INT,
   `nombreAdministrador` VARCHAR(45) NOT NULL,
   `correoElectronico` VARCHAR(45) NOT NULL,
-  `contraseña` VARCHAR(45) NOT NULL,
+  `contrasena` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idAdministrador`, `idFoto`),
   CONSTRAINT `idFoto`
     FOREIGN KEY (`idFoto`)
@@ -60,7 +60,7 @@ CREATE UNIQUE INDEX `idAdministrador_UNIQUE` ON `MEXCOM`.`Administrador` (`idAdm
 CREATE INDEX `idFoto_idx` ON `MEXCOM`.`Administrador` (`idFoto` ASC) VISIBLE;
 
 -- Insertamos un usuario administrador de ejemplo
-INSERT INTO `MEXCOM`.`Administrador` (`idFoto`, `nombreAdministrador`, `correoElectronico`, `contraseña`) 
+INSERT INTO `MEXCOM`.`Administrador` (`idFoto`, `nombreAdministrador`, `correoElectronico`, `contrasena`) 
 VALUES (1, 'Juan Perez', 'juan@example.com', 'secreto123');
 
 -- -----------------------------------------------------
@@ -185,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `MEXCOM`.`Ofertadores` (
   `nombreOfertante` VARCHAR(45) NOT NULL,
   `fechaNacimiento` DATE NOT NULL,
   `usuario` VARCHAR(45) NOT NULL,
-  `contraseña` VARCHAR(45) NOT NULL,
+  `contrasena` VARCHAR(45) NOT NULL,
   `correoElectronico` VARCHAR(45) NOT NULL,
   `informacionContacto` VARCHAR(100) NULL,
   PRIMARY KEY (`idOfertador`, `idFoto`),
@@ -203,19 +203,19 @@ CREATE INDEX `idFoto_idx` ON `MEXCOM`.`Ofertadores` (`idFoto` ASC) VISIBLE;
 -- Resto de las instrucciones INSERT...
 
 -- Insertamos algunos ofertantes como ejemplos
-INSERT INTO `MEXCOM`.`Ofertadores` (`idFoto`, `tipoOfertador`, `nombreOfertante`, `fechaNacimiento`, `usuario`, `contraseña`, `correoElectronico`, `informacionContacto`)
+INSERT INTO `MEXCOM`.`Ofertadores` (`idFoto`, `tipoOfertador`, `nombreOfertante`, `fechaNacimiento`, `usuario`, `contrasena`, `correoElectronico`, `informacionContacto`)
 VALUES (1, 'Comerciante', 'Juan Pérez', '1990-01-01', 'juanperez', '123456', 'juan@example.com', 'Whastapp: 5594685215');
 
-INSERT INTO `MEXCOM`.`Ofertadores` (`idFoto`, `tipoOfertador`, `nombreOfertante`, `fechaNacimiento`, `usuario`, `contraseña`, `correoElectronico`, `informacionContacto`)
+INSERT INTO `MEXCOM`.`Ofertadores` (`idFoto`, `tipoOfertador`, `nombreOfertante`, `fechaNacimiento`, `usuario`, `contrasena`, `correoElectronico`, `informacionContacto`)
 VALUES (1, 'Comerciante', 'Pedro Ramírez', '1995-09-20', 'pedroramirez', 'qwerty', 'pedro@example.com', 'Facebook: Miguel Reparalo');
 
-INSERT INTO `MEXCOM`.`Ofertadores` (`idFoto`, `tipoOfertador`, `nombreOfertante`, `fechaNacimiento`, `usuario`, `contraseña`, `correoElectronico`, `informacionContacto`)
+INSERT INTO `MEXCOM`.`Ofertadores` (`idFoto`, `tipoOfertador`, `nombreOfertante`, `fechaNacimiento`, `usuario`, `contrasena`, `correoElectronico`, `informacionContacto`)
 VALUES (1, 'ProveedorServicios', 'María López', '1985-05-10', 'marialopez', 'abcdef', 'maria@example.com', 'Telefono: 5596034295');
 
-INSERT INTO `MEXCOM`.`Ofertadores` (`idFoto`, `tipoOfertador`, `nombreOfertante`, `fechaNacimiento`, `usuario`, `contraseña`, `correoElectronico`, `informacionContacto`)
+INSERT INTO `MEXCOM`.`Ofertadores` (`idFoto`, `tipoOfertador`, `nombreOfertante`, `fechaNacimiento`, `usuario`, `contrasena`, `correoElectronico`, `informacionContacto`)
 VALUES (1, 'Comerciante', 'Luis González', '1988-12-15', 'luisgonzalez', '7890', 'luis@example.com', NULL);
 
-INSERT INTO `MEXCOM`.`Ofertadores` (`idFoto`, `tipoOfertador`, `nombreOfertante`, `fechaNacimiento`, `usuario`, `contraseña`, `correoElectronico`, `informacionContacto`)
+INSERT INTO `MEXCOM`.`Ofertadores` (`idFoto`, `tipoOfertador`, `nombreOfertante`, `fechaNacimiento`, `usuario`, `contrasena`, `correoElectronico`, `informacionContacto`)
 VALUES (1, 'ProveedorServicios', 'Ana Torres', '1993-06-25', 'anatorres', 'EscomServicios19823', 'ana@example.com', 'Correo electronico de contacto: AsesoriasEscom@hotmail.com');
 
 
@@ -229,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `MEXCOM`.`puntosDeOferta` (
   `idOfertador` INT NOT NULL,
   `idFoto` INT NOT NULL,
   `nombrePuntoDeOferta` VARCHAR(45) NOT NULL,
-  `descripción` VARCHAR(250) NOT NULL,
+  `descripcion` VARCHAR(250) NOT NULL,
   `horario` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idPuntoDeOferta`, `idRegion`, `idOfertador`, `idFoto`),
   CONSTRAINT `FK_puntosDeOferta_Regiones`
@@ -254,19 +254,19 @@ CREATE INDEX `idRegion_idx` ON `MEXCOM`.`puntosDeOferta` (`idRegion` ASC) VISIBL
 CREATE INDEX `idOfertador_idx` ON `MEXCOM`.`puntosDeOferta` (`idOfertador` ASC) VISIBLE;
 CREATE INDEX `idFoto_idx` ON `MEXCOM`.`puntosDeOferta` (`idFoto` ASC) VISIBLE;
 
-INSERT INTO `MEXCOM`.`puntosDeOferta` (`idRegion`, `idOfertador`, `idFoto`, `nombrePuntoDeOferta`, `descripción`, `horario`)
+INSERT INTO `MEXCOM`.`puntosDeOferta` (`idRegion`, `idOfertador`, `idFoto`, `nombrePuntoDeOferta`, `descripcion`, `horario`)
 VALUES (1, 1, 1, 'Comida COTSCO', 'Alimentos ricos recién traídos de COTSCO', 'Lunes a viernes: 12:00 PM - 8:00 PM');
 
-INSERT INTO `MEXCOM`.`puntosDeOferta` (`idRegion`, `idOfertador`, `idFoto`, `nombrePuntoDeOferta`, `descripción`, `horario`)
+INSERT INTO `MEXCOM`.`puntosDeOferta` (`idRegion`, `idOfertador`, `idFoto`, `nombrePuntoDeOferta`, `descripcion`, `horario`)
 VALUES (1, 3, 1, 'Asesoría en computación', 'Ofrezco asesorías en programación en diversas áreas', 'Martes y jueves: 6:00 PM - 7:30 PM');
 
-INSERT INTO `MEXCOM`.`puntosDeOferta` (`idRegion`, `idOfertador`, `idFoto`, `nombrePuntoDeOferta`, `descripción`, `horario`)
+INSERT INTO `MEXCOM`.`puntosDeOferta` (`idRegion`, `idOfertador`, `idFoto`, `nombrePuntoDeOferta`, `descripcion`, `horario`)
 VALUES (1, 5, 1, 'Servicios de Reparación Mike', 'Ofrezco mis servicios de reparación y mantenimiento de dispositivos electrónicos', 'Lunes a viernes: 8:00 AM - 6:00 PM');
 
-INSERT INTO `MEXCOM`.`puntosDeOferta` (`idRegion`, `idOfertador`, `idFoto`, `nombrePuntoDeOferta`, `descripción`, `horario`)
+INSERT INTO `MEXCOM`.`puntosDeOferta` (`idRegion`, `idOfertador`, `idFoto`, `nombrePuntoDeOferta`, `descripcion`, `horario`)
 VALUES (4, 2, 1, 'Accesorios y más Yuly', 'Venta de los mejores accesorios y stickers en ESCOM', 'Lunes a domingo: 9:00 AM - 6:00 PM');
 
-INSERT INTO `MEXCOM`.`puntosDeOferta` (`idRegion`, `idOfertador`, `idFoto`, `nombrePuntoDeOferta`, `descripción`, `horario`)
+INSERT INTO `MEXCOM`.`puntosDeOferta` (`idRegion`, `idOfertador`, `idFoto`, `nombrePuntoDeOferta`, `descripcion`, `horario`)
 VALUES (1, 4, 1, 'Dulces Escom', 'Venta de variedad de dulces y jugos - Servicio hasta su salón', 'Lunes a domingo: 6:00 PM - 10:00 PM');
 
 -- -----------------------------------------------------
@@ -276,7 +276,7 @@ CREATE TABLE IF NOT EXISTS `MEXCOM`.`Productos` (
   `idProducto` INT NOT NULL AUTO_INCREMENT,
   `idPuntoDeOferta` INT NOT NULL,
   `nombreProducto` VARCHAR(45) NOT NULL,
-  `descripción` VARCHAR(300) NOT NULL,
+  `descripcion` VARCHAR(300) NOT NULL,
   `precio` FLOAT NOT NULL,
   PRIMARY KEY (`idProducto`, `idPuntoDeOferta`),
   CONSTRAINT `idPuntoDeOferta`
@@ -292,11 +292,11 @@ CREATE INDEX `idPuntoDeOferta_idx` ON `MEXCOM`.`Productos` (`idPuntoDeOferta` AS
 
 
 -- Valores por defecto para los productos del primer vendedor
-INSERT INTO `MEXCOM`.`Productos` (`idPuntoDeOferta`, `nombreProducto`, `descripción`, `precio`)
+INSERT INTO `MEXCOM`.`Productos` (`idPuntoDeOferta`, `nombreProducto`, `descripcion`, `precio`)
 VALUES (1, 'Galletas de Chocolate', 'Deliciosas galletas de chocolate con trozos de chocolate semiamargo', 25.99);
-INSERT INTO `MEXCOM`.`Productos` (`idPuntoDeOferta`, `nombreProducto`, `descripción`, `precio`)
+INSERT INTO `MEXCOM`.`Productos` (`idPuntoDeOferta`, `nombreProducto`, `descripcion`, `precio`)
 VALUES (1, 'Rebanadas de Pizza', 'Pizza recién horneada con variedad de ingredientes y sabores', 45.99);
-INSERT INTO `MEXCOM`.`Productos` (`idPuntoDeOferta`, `nombreProducto`, `descripción`, `precio`)
+INSERT INTO `MEXCOM`.`Productos` (`idPuntoDeOferta`, `nombreProducto`, `descripcion`, `precio`)
 VALUES (1, 'Chicken Roll', 'Rollos de pollo crujiente y jugoso con especias y salsas', 35.99);
 
 
@@ -307,9 +307,9 @@ CREATE TABLE IF NOT EXISTS `MEXCOM`.`Servicios` (
   `idServicio` INT NOT NULL AUTO_INCREMENT,
   `idPuntoDeOferta` INT NOT NULL,
   `nombreServicio` VARCHAR(45) NOT NULL,
-  `descripción` VARCHAR(300) NOT NULL,
-  `precioAproximado(Minimo)` INT NOT NULL,
-  `precioAproximado(Maximo)` INT NOT NULL,
+  `descripcion` VARCHAR(300) NOT NULL,
+  `precioAproximadoMin` INT NOT NULL,
+  `precioAproximadoMax` INT NOT NULL,
   PRIMARY KEY (`idServicio`, `idPuntoDeOferta`),
   CONSTRAINT `idPuntoDeOferta0`
     FOREIGN KEY (`idPuntoDeOferta`)
@@ -323,11 +323,11 @@ CREATE UNIQUE INDEX `nombreProducto_UNIQUE` ON `MEXCOM`.`Servicios` (`nombreServ
 CREATE INDEX `idPuntoDeOferta_idx` ON `MEXCOM`.`Servicios` (`idPuntoDeOferta` ASC) VISIBLE;
 
 -- Valores para pruebas de servicios
-INSERT INTO `MEXCOM`.`Servicios` (`idPuntoDeOferta`, `nombreServicio`, `descripción`, `precioAproximado(Minimo)`, `precioAproximado(Maximo)`)
+INSERT INTO `MEXCOM`.`Servicios` (`idPuntoDeOferta`, `nombreServicio`, `descripcion`, `precioAproximadoMin`, `precioAproximadoMax`)
 VALUES (3, 'Reparación de Pantalla', 'Servicio de reparación de pantallas de dispositivos electrónicos como teléfonos, tablets y televisores.', 300, 800);
-INSERT INTO `MEXCOM`.`Servicios` (`idPuntoDeOferta`, `nombreServicio`, `descripción`, `precioAproximado(Minimo)`, `precioAproximado(Maximo)`)
+INSERT INTO `MEXCOM`.`Servicios` (`idPuntoDeOferta`, `nombreServicio`, `descripcion`, `precioAproximadoMin`, `precioAproximadoMax`)
 VALUES (3, 'Reparación de Computadoras', 'Servicio de reparación y mantenimiento de computadoras de escritorio y portátiles.', 500, 1500);
-INSERT INTO `MEXCOM`.`Servicios` (`idPuntoDeOferta`, `nombreServicio`, `descripción`, `precioAproximado(Minimo)`, `precioAproximado(Maximo)`)
+INSERT INTO `MEXCOM`.`Servicios` (`idPuntoDeOferta`, `nombreServicio`, `descripcion`, `precioAproximadoMin`, `precioAproximadoMax`)
 VALUES (3, 'Reparación de Controles de Xbox', 'Servicio de reparación de controles de Xbox, incluyendo reparación de botones, sticks analógicos y conexiones inalámbricas.', 100, 300);
 
 -- -----------------------------------------------------

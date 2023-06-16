@@ -4,7 +4,7 @@ const router = Router();
 
 //Con router manejamos las rutas y las peticiones HTML
 router.get("/", apiMexcom.getPuntosOferta);
-router.post("/", apiMexcom.addProduct);
+router.post("/addproducto", apiMexcom.addProduct);//Nueva ruta para añadir productos
 router.get("/ofertadores", apiMexcom.getOfertadores); // Nueva ruta para getOfertadores
 router.get("/comentarios", apiMexcom.getComentarios); // Nueva ruta para getOfertadores
 router.post("/ver-usuario", apiMexcom.verUsuario); // Nueva ruta para verUsuario
@@ -12,5 +12,9 @@ router.post("/crear-ofertante", apiMexcom.crearOfertante); // Nueva ruta para cr
 router.post("/crear-pdo", apiMexcom.crearPuntoOferta); // Nueva ruta para crearPuntoDeOferta
 router.delete("/del-pts", apiMexcom.delProductos); // Ruta para eliminar productos
 router.delete("/del-pdo", apiMexcom.delPDO); // Ruta para eliminar puntos de ofertas
-router.delete("/del-ofers", apiMexcom.delOfertadores); // Ruta para eliminar puntos de ofertas
+router.delete("/del-ofers", apiMexcom.delOfertadores); // Ruta para eliminar ofertantes
+router.post("/ins-serv", apiMexcom.insServicio); // Nueva ruta para crear servicios
+router.put("/upd-ofer", apiMexcom.updateOfertador);//Actualizar ofertador
+router.put("/upd-prod", apiMexcom.updateProducts);//Actualizar producto
+router.put("/upd-serv", apiMexcom.updateServs);//Actualizar servicio
 export default router;
