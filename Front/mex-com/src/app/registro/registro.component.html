@@ -1,0 +1,30 @@
+<form [formGroup]="form" class="registration-form align-items-center" fxLayout="column" (ngSubmit)="register($event)">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Type your email" type="email" formControlName="email">
+      <mat-icon matPrefix>mail_outline</mat-icon>
+      <mat-error *ngIf="form && checkRequiredError('email') && !checkRequiredError('email')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="checkRequiredError('email')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput placeholder="Type your password" type="password" formControlName="password">
+      <mat-icon matPrefix>lock_outline</mat-icon>
+      <mat-error *ngIf="checkRequiredError('password')">
+        Password is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Confirm Password</mat-label>
+      <input matInput placeholder="Confirm your password" type="password" formControlName="confirmPassword">
+      <mat-icon matPrefix>lock_outline</mat-icon>
+      <mat-error *ngIf="checkPasswordMismatchError()">
+        Passwords do not match
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" class="register-button mt-3">Register</button>
+  </form>

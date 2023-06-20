@@ -1,0 +1,16 @@
+.body{
+    height: 100%;
+    background: rgb(255,166,5);
+background: radial-gradient(circle, rgba(255,166,5,1) 67%, rgba(210,109,37,1) 100%);
+}
+
+.card{
+    height: 50px;
+    width: 100px;
+    background-color: white;
+}
+
+.content{
+    display: flex;
+    flex-flow: row;
+}
