@@ -1,7 +1,9 @@
 .body{
     height: 100%;
     background: rgb(255,166,5);
-background: radial-gradient(circle, rgba(255,166,5,1) 67%, rgba(210,109,37,1) 100%);
+background: linear-gradient(circle, rgba(255,166,5,1) 67%, rgba(210,109,37,1) 100%);
+display: grid;
+grid-template-columns: 50% auto ;
 }
 
 .card{
@@ -11,6 +13,58 @@ background: radial-gradient(circle, rgba(255,166,5,1) 67%, rgba(210,109,37,1) 10
 }
 
 .content{
+}
+.sidebar{
+    height:100%;
+    width:0px;
+    background-color:rgb(78, 76, 76);
+    position:absolute;
+    z-index:1;
+    overflow:auto;
+    display: flex;
+    flex-direction: column;
+    transition: width .5s;
+}
+hr{
+    color: gray;
+}
+.sidebarHead{
+    display: grid  ;
+    grid-template-columns: 80% auto;
+    height: 50px;
+    
+}
+.sidebarItem{
+    margin: 10px;
+}
+#map{
+    border-radius: 10px;
+}
+#header{
+    background: rgb(78, 76, 76);
     display: flex;
     flex-flow: row;
+    justify-items: flex-start;
+    justify-content: space-evenly;
+}
+#sidebarButton, .sidebarButton{
+    background: none;
+    border: none;
+    color: aliceblue;
+    font-size: 40px;
+}
+#buscador{
+    margin: 1em 3em 1em 3em;
+    
+    width: 80%;
+    height: 3em;
+    border-radius: 20px;
+    border: none;
+    padding-left: 20px;
+}
+#buscador::placeholder{
+    text-align: center  ;
+}
+#buscador::target-text{
+    text-align: center;
 }

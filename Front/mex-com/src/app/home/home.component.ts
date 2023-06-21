@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import {} from 'googlemaps';
 import { OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
@@ -12,7 +12,11 @@ export class HomeComponent implements OnInit  {
   ngOnInit(): void {
   }
   @ViewChild('map') mapElement: any;
+  @ViewChild('sidebar')sidebar!: ElementRef<HTMLDivElement>;
     map!: google.maps.Map;
+    showSidebar(): void{
+      this.sidebar.nativeElement.style.width = '210px';
+    }
     ngAfterViewInit(): void {
       const mapProperties = {
            center: new google.maps.LatLng(        19.504047, -99.140781

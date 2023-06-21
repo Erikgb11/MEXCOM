@@ -1,7 +1,19 @@
 <div class="body">
-
-    <p>home works!</p>
+    <div class="sidebar" #sidebar >
+        <div class="sidebarHead">
+            <p class="sidebarButton">MEXCOM</p>
+            <button class="sidebarCloseBtn">X</button>
+        </div>
+        <hr>
+        <a href="#" class="sidebarItem">Link 1</a>
+        <a href="#" class="sidebarItem">Link 2</a>
+        <a href="#" class="sidebarItem">Link 3</a>
+      </div>
     <div class="content">
+        <div id="header">
+        <button id="sidebarButton" (click)="showSidebar()">☰</button>
+        <input id="buscador" type="text" placeholder="¿Que deseas buscar?">
+        </div>
         <div class="cards">
             <div class="card">
     
@@ -13,9 +25,9 @@
                 
             </div>
         </div>
-    <div #map style="width:30%;height:400px"></div>
 
     
 </div>
+<div id="map" #map style="width:100%;height:100%"></div>
 
 </div>
