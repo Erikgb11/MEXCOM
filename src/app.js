@@ -1,5 +1,6 @@
 import express  from "express";
 import  morgan  from "morgan";
+import cors from "cors"; // Importar el módulo cors
 import MEXCOMrutas from "./routes/MEXCOM.Rutas";
 //Expres nos ayuda a manejar rutas como get, put, delete
 const app = express();
@@ -12,7 +13,8 @@ app.set("port", 9000);
 app.use(morgan("dev"));
 //Middleware para que pueda recibir json
 app.use(express.json());
-
+//Agregamos un middelware para usar cors
+app.use(cors());
 
 //Implementamos las rutas de peticion REST por defualt 
 app.use("/api", MEXCOMrutas);
