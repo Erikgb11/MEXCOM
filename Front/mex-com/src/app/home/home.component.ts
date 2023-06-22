@@ -15,7 +15,11 @@ export class HomeComponent implements OnInit  {
   @ViewChild('sidebar')sidebar!: ElementRef<HTMLDivElement>;
     map!: google.maps.Map;
     showSidebar(): void{
-      this.sidebar.nativeElement.style.width = '210px';
+      this.sidebar.nativeElement.style.width = '240px';
+    }
+    hideSidebar(): void{
+      this.sidebar.nativeElement.style.width = '0px';
+      
     }
     ngAfterViewInit(): void {
       const mapProperties = {
