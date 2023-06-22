@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
@@ -13,16 +14,27 @@ export class RegistroComponent {
     confirmPassword: ['', [Validators.required]]
   });
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private _http:HttpClient) { }
 
   register(event: Event) {
     event.preventDefault();
     
     if (this.form.valid && this.checkPasswordMatch()) {
-      // Aquí puedes enviar los datos de registro al servidor
-      // Por ejemplo, puedes llamar a un servicio de registro:
-      // this.authService.register(this.form.value);
+      this.registrarVendedor();
     }
+  }
+  registrarVendedor() {
+      let datos={
+        nombre: this.form.get('nombre'),
+        apPat: this.form.get('ApPat'),
+        apMat: this.form.get('ApMat'),
+        fechNac: this.form.get('nacimiento'),
+        email: this.form.get('email'),
+        password: this.form.get('password'),
+        
+      }
+
+
   }
 
   checkRequiredError(controlName: string) {

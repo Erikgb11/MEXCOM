@@ -1,20 +1,5 @@
 <form [formGroup]="form" class="registration-form align-items-center" fxLayout="column" (ngSubmit)="register($event)">
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Foto</mat-label>
-      <input matInput placeholder="Foto de ofertador" type="image" formControlName="foto">
-      <mat-icon matPrefix>lock_outline</mat-icon>
-      <mat-error *ngIf="checkRequiredError('foto')">
-        Foto es <strong>requerida</strong>
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Ofertador</mat-label>
-      <input matInput placeholder="Tipo de ofertador" type="text" formControlName="ofertador">
-      <mat-icon matPrefix>lock_outline</mat-icon>
-      <mat-error *ngIf="checkRequiredError('ofertador')">
-        Ofertador es <strong>requerido</strong>
-      </mat-error>
-    </mat-form-field>
+      <input placeholder="Foto de ofertador" type="file" formControlName="foto">
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Nombre</mat-label>
       <input matInput placeholder="Nombre de usuario" type="text" formControlName="nombre">
@@ -24,19 +9,27 @@
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput placeholder="Apellido Paterno" type="text" formControlName="ApPat">
+      <mat-icon matPrefix>lock_outline</mat-icon>
+      <mat-error *ngIf="checkRequiredError('ApPat')">
+        El apellido paterno es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput placeholder="Apellido Materno" type="text" formControlName="ApMat">
+      <mat-icon matPrefix>lock_outline</mat-icon>
+      <mat-error *ngIf="checkRequiredError('ApMat')">
+        El apellido materno" es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Fecha de nacimiento</mat-label>
       <input matInput placeholder="Nacimiento" type="date" formControlName="nacimiento">
       <mat-icon matPrefix>lock_outline</mat-icon>
       <mat-error *ngIf="checkRequiredError('nacimiento')">
         Fecha de nacimiento es <strong>requerido</strong>
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Nombre de usuario</mat-label>
-      <input matInput placeholder="Usuario" type="text" formControlName="user">
-      <mat-icon matPrefix>lock_outline</mat-icon>
-      <mat-error *ngIf="checkRequiredError('user')">
-        Nombre de usuario es <strong>requerido</strong>
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" class="full-width">
