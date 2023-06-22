@@ -1,13 +1,53 @@
 <form [formGroup]="form" class="registration-form align-items-center" fxLayout="column" (ngSubmit)="register($event)">
     <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Foto</mat-label>
+      <input matInput placeholder="Foto de ofertador" type="image" formControlName="foto">
+      <mat-icon matPrefix>lock_outline</mat-icon>
+      <mat-error *ngIf="checkRequiredError('foto')">
+        Foto es <strong>requerida</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Ofertador</mat-label>
+      <input matInput placeholder="Tipo de ofertador" type="text" formControlName="ofertador">
+      <mat-icon matPrefix>lock_outline</mat-icon>
+      <mat-error *ngIf="checkRequiredError('ofertador')">
+        Ofertador es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput placeholder="Nombre de usuario" type="text" formControlName="nombre">
+      <mat-icon matPrefix>lock_outline</mat-icon>
+      <mat-error *ngIf="checkRequiredError('nombre')">
+        Nombre es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Fecha de nacimiento</mat-label>
+      <input matInput placeholder="Nacimiento" type="date" formControlName="nacimiento">
+      <mat-icon matPrefix>lock_outline</mat-icon>
+      <mat-error *ngIf="checkRequiredError('nacimiento')">
+        Fecha de nacimiento es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre de usuario</mat-label>
+      <input matInput placeholder="Usuario" type="text" formControlName="user">
+      <mat-icon matPrefix>lock_outline</mat-icon>
+      <mat-error *ngIf="checkRequiredError('user')">
+        Nombre de usuario es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Email</mat-label>
       <input matInput placeholder="Type your email" type="email" formControlName="email">
       <mat-icon matPrefix>mail_outline</mat-icon>
       <mat-error *ngIf="form && checkRequiredError('email') && !checkRequiredError('email')">
-        Please enter a valid email address
+        Porfavor ingresa un email valido.
       </mat-error>
       <mat-error *ngIf="checkRequiredError('email')">
-        Email is <strong>required</strong>
+        Email es <strong>requerido</strong>
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" class="full-width">
@@ -15,7 +55,7 @@
       <input matInput placeholder="Type your password" type="password" formControlName="password">
       <mat-icon matPrefix>lock_outline</mat-icon>
       <mat-error *ngIf="checkRequiredError('password')">
-        Password is <strong>required</strong>
+        Contraseña es <strong>requerida</strong>
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" class="full-width">
@@ -23,8 +63,16 @@
       <input matInput placeholder="Confirm your password" type="password" formControlName="confirmPassword">
       <mat-icon matPrefix>lock_outline</mat-icon>
       <mat-error *ngIf="checkPasswordMismatchError()">
-        Passwords do not match
+        Las contraseñas no coinciden.
       </mat-error>
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit" class="register-button mt-3">Register</button>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Telefono</mat-label>
+      <input matInput placeholder="Numero telefonico" type="number" formControlName="celphone">
+      <mat-icon matPrefix>lock_outline</mat-icon>
+      <mat-error *ngIf="checkRequiredError('celphone')">
+        Numero de telefono es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" class="register-button mt-3">Resgistrar</button>
   </form>
