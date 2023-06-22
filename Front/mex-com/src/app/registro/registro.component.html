@@ -2,50 +2,40 @@
       <input placeholder="Foto de ofertador" type="file" formControlName="foto">
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Nombre</mat-label>
-      <input matInput placeholder="Nombre de usuario" type="text" formControlName="nombre">
+      <input matInput placeholder="Nombre de usuario" type="text" formControlName="nombre" name="nombre"#nombre>
       <mat-icon matPrefix>lock_outline</mat-icon>
       <mat-error *ngIf="checkRequiredError('nombre')">
         Nombre es <strong>requerido</strong>
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Nombre</mat-label>
-      <input matInput placeholder="Apellido Paterno" type="text" formControlName="ApPat">
+      <mat-label>Apellido Paterno</mat-label>
+      <input matInput placeholder="Apellido Paterno" type="text" formControlName="ApPat" name="ApPat" #apPat>
       <mat-icon matPrefix>lock_outline</mat-icon>
       <mat-error *ngIf="checkRequiredError('ApPat')">
         El apellido paterno es <strong>requerido</strong>
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Nombre</mat-label>
-      <input matInput placeholder="Apellido Materno" type="text" formControlName="ApMat">
+      <mat-label>Apellido Materno</mat-label>
+      <input matInput placeholder="Apellido Materno" type="text" formControlName="ApMat" #apMat>
       <mat-icon matPrefix>lock_outline</mat-icon>
       <mat-error *ngIf="checkRequiredError('ApMat')">
         El apellido materno" es <strong>requerido</strong>
       </mat-error>
     </mat-form-field>
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Fecha de nacimiento</mat-label>
-      <input matInput placeholder="Nacimiento" type="date" formControlName="nacimiento">
-      <mat-icon matPrefix>lock_outline</mat-icon>
-      <mat-error *ngIf="checkRequiredError('nacimiento')">
-        Fecha de nacimiento es <strong>requerido</strong>
-      </mat-error>
-    </mat-form-field>
+    
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Email</mat-label>
-      <input matInput placeholder="Type your email" type="email" formControlName="email">
+      <input matInput placeholder="Type your email" type="email" formControlName="email"name="email" #email>
       <mat-icon matPrefix>mail_outline</mat-icon>
       <mat-error *ngIf="form && checkRequiredError('email') && !checkRequiredError('email')">
         Porfavor ingresa un email valido.
       </mat-error>
-      <mat-error *ngIf="checkRequiredError('email')">
-        Email es <strong>requerido</strong>
-      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Password</mat-label>
-      <input matInput placeholder="Type your password" type="password" formControlName="password">
+      <input matInput placeholder="Type your password" type="password" formControlName="password" name="password" #password>
       <mat-icon matPrefix>lock_outline</mat-icon>
       <mat-error *ngIf="checkRequiredError('password')">
         Contraseña es <strong>requerida</strong>
@@ -53,7 +43,7 @@
     </mat-form-field>
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Confirm Password</mat-label>
-      <input matInput placeholder="Confirm your password" type="password" formControlName="confirmPassword">
+      <input matInput placeholder="Confirm your password" type="password" formControlName="confirmPassword" name="confirmPassword">
       <mat-icon matPrefix>lock_outline</mat-icon>
       <mat-error *ngIf="checkPasswordMismatchError()">
         Las contraseñas no coinciden.
@@ -61,11 +51,11 @@
     </mat-form-field>
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Telefono</mat-label>
-      <input matInput placeholder="Numero telefonico" type="number" formControlName="celphone">
+      <input matInput placeholder="Numero telefonico" type="number" formControlName="celphone" name="celphone" #celphone>
       <mat-icon matPrefix>lock_outline</mat-icon>
       <mat-error *ngIf="checkRequiredError('celphone')">
         Numero de telefono es <strong>requerido</strong>
       </mat-error>
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit" class="register-button mt-3">Resgistrar</button>
+    <button mat-raised-button color="primary" type="submit" class="register-button mt-3" >Resgistrar</button>
   </form>

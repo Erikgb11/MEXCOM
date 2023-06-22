@@ -1,11 +1,14 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
-  styleUrls: ['./registro.component.scss']
+  styleUrls: ['./registro.component.scss'],
 })
 export class RegistroComponent {
   form: FormGroup = this.formBuilder.group({
@@ -13,28 +16,32 @@ export class RegistroComponent {
     password: ['', [Validators.required]],
     confirmPassword: ['', [Validators.required]]
   });
-
+  @ViewChild('nombre')
+  nombre!: ElementRef<HTMLInputElement>;
+  @ViewChild('apPat')
+  apPat!: ElementRef<HTMLInputElement>;
+  @ViewChild('apMat')
+  apMat!: ElementRef<HTMLInputElement>;
+  @ViewChild('email')
+  email!: ElementRef<HTMLInputElement>;
+  @ViewChild('password')
+  password!: ElementRef<HTMLInputElement>;
   constructor(private formBuilder: FormBuilder, private _http:HttpClient) { }
 
   register(event: Event) {
-    event.preventDefault();
-    
-    if (this.form.valid && this.checkPasswordMatch()) {
+      console.log("hOLA");
       this.registrarVendedor();
-    }
   }
   registrarVendedor() {
       let datos={
-        nombre: this.form.get('nombre'),
-        apPat: this.form.get('ApPat'),
-        apMat: this.form.get('ApMat'),
-        fechNac: this.form.get('nacimiento'),
-        email: this.form.get('email'),
-        password: this.form.get('password'),
-        
+        nombre: this.nombre.nativeElement.value,
+        apMat: this.apMat.nativeElement.value,
+        apPat: this.apPat.nativeElement.value,
+        email: this.email.nativeElement.value,
+        password: this.password.nativeElement.value
       }
-
-
+      console.log(datos)
+      this._http.post("https://localhost:7136/Altas/GuardarDatos", datos);
   }
 
   checkRequiredError(controlName: string) {

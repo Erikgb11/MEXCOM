@@ -9,11 +9,15 @@ import { ViewChild } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit  {
+  map!: google.maps.Map;
+  prevZone: any = 1;
+  actZone: any = 0;
   ngOnInit(): void {
   }
   @ViewChild('map') mapElement: any;
   @ViewChild('sidebar')sidebar!: ElementRef<HTMLDivElement>;
-    map!: google.maps.Map;
+   
+
     showSidebar(): void{
       this.sidebar.nativeElement.style.width = '240px';
     }
@@ -35,6 +39,18 @@ export class HomeComponent implements OnInit  {
           fillColor: feature.getProperty("fill"),
           strokeWeight: 1,
         };
+      });
+      this.map.data.addListener('click', function(event) {
+        console.log(event.feature.getProperty('Id'))
+        document.getElementById("1")?.setAttribute("hidden","hidden")
+        document.getElementById("2")?.setAttribute("hidden","hidden")
+        document.getElementById("3")?.setAttribute("hidden","hidden")
+        document.getElementById("4")?.setAttribute("hidden","hidden")
+        document.getElementById("5")?.setAttribute("hidden","hidden")
+        document.getElementById("6")?.setAttribute("hidden","hidden")
+       document.getElementById(""+event.feature.getProperty('Id'))?.removeAttribute("hidden");
+        
+        
       });
    }
 }

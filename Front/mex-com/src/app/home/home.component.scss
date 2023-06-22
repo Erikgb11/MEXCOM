@@ -95,5 +95,20 @@ hr{
     font-size: 30px;
     margin: 15px;
     text-align: center;
-    font-weight: lighter    ;
+    font-weight: lighter;
 }
+.cards{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    height: 500px;
+    overflow-y: scroll;
+}
+.card{
+    margin-bottom: 30px;
+}
+.frame {
+    height: 100px;
+    background: transparent no-repeat center;
+    background-size: cover;
+  }
